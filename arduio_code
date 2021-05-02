@@ -1,0 +1,57 @@
+#include <LiquidCrystal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+int LED1=6;
+int LED2=7;
+int IR1=8;
+int IR2=10;
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+void setup() 
+{
+  Serial.begin(9600);
+  pinMode(LED1, OUTPUT);   
+  pinMode(LED2, OUTPUT); 
+  digitalWrite(LED1, LOW); 
+  digitalWrite(LED2, LOW);    
+  digitalRead(8);//IR1
+  digitalRead(9);//IR2
+  lcd.begin(16, 2);
+  lcd.clear();
+  lcd.print("LIGHT");
+  delay(1000);
+  lcd.setCursor(0,1);
+  lcd.print("MONITOR SYSTEM");
+  delay(1000);
+  lcd.clear(); 
+}
+void loop()                    
+{
+  while(1)
+  {
+    if(digitalRead(IR1) ==LOW)
+    {
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("PERSON1 DETECTED");
+      delay(1000); 
+      digitalWrite(LED1,HIGH);
+      delay(1000);
+    }
+    if(digitalRead(IR2) ==LOW)
+    {
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("PERSON2 DETECTED");
+      delay(1000);
+      digitalWrite(LED2,HIGH);
+      delay(1000);
+    }
+    else
+    {
+      digitalWrite(LED1,LOW);
+      digitalWrite(LED2,LOW);
+      delay(100);
+    }
+  } 
+}
